@@ -10,6 +10,7 @@ export default class WP {
     return new Promise((resolve, reject) => {
       WPAPI.discover(this.url).then(site =>{
         console.log(site);
+        site.namespace('dmco').menu().id(2).then(data => console.log(data));
         resolve((this.wp = site))
       });
     });

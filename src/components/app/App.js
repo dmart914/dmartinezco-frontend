@@ -6,6 +6,7 @@ import WP from '../../lib/wp';
 
 const wp = new WP(process.env.REACT_APP_WP_HOST).init();
 
+
 class App extends Component {
   render() {
     return (
