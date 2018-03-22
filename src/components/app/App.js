@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
 
 import Menu from '../organisms/menu/menu';
@@ -27,10 +28,14 @@ class App extends Component {
     const { primaryMenu } = wp.data;
 
     return (
-      <div className="App">
-        <Header />
-        <Menu data={primaryMenu} />
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <Header />
+          <Menu data={primaryMenu} />
+
+            <Route path='/sample-page' render={props => (<h1>Sample Page</h1>)} />
+        </div>
+      </BrowserRouter>
     );
   }
 }

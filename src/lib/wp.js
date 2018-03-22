@@ -24,14 +24,25 @@ export default class WP {
     });
   }
 
-  _fetchPrimaryMenu = (menuId) => {
+  _fetchPrimaryMenu = menuId => {
     return new Promise((resolve, reject) => {
       this.site
         .namespace('dmco')
         .menu()
         .id(menuId)
-        .then(data => (this.data.primaryMenu = data))
+        .then(data => {
+          if (data.items && data.items.length > 0) {
+            for (let i = 0; i < data.items.length; i++) {
+              data.items[i].url = data.items[i].url.replace(
+                process.env.REACT_APP_WP_HOST,
+                ''
+              );
+            }
+          }
+
+          this.data.primaryMenu = data;
+        })
         .then(() => resolve());
     });
-  }
+  };
 }

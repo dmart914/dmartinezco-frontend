@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Menu extends Component {
   render() {
@@ -16,7 +17,7 @@ export default class Menu extends Component {
 
   _navLink = (item) => (
     <li key={item.ID}>
-      <a href={item.url}>{item.title}</a>
+      <Link to={item.url}>{item.title}</Link>
     </li>
   );
 }
