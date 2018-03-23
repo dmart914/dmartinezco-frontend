@@ -29,8 +29,10 @@ export default class WP {
       this.site
         .namespace('dmco')
         .menu()
-        .id(menuId)
+        .location()
+        .id('dmco_primary_menu')
         .then(data => {
+          console.log(data);
           if (data.items && data.items.length > 0) {
             for (let i = 0; i < data.items.length; i++) {
               data.items[i].url = data.items[i].url.replace(

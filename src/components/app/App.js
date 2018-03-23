@@ -6,6 +6,8 @@ import Menu from '../organisms/menu/menu';
 import Header from '../organisms/header/header';
 import Loading from '../atoms/loading/loading';
 
+import HomePage from '../pages/home/home';
+
 import WP from '../../lib/wp';
 const wp = new WP(process.env.REACT_APP_WP_HOST, {
   primaryMenuId: process.env.REACT_APP_WP_PRIMARY_MENU_ID
@@ -30,10 +32,11 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="App">
-          <Header />
-          <Menu data={primaryMenu} />
+          {/** <Header /> **/}
+          {/** <Menu data={primaryMenu} /> **/ }
+          <Route exact path="/" render={props => <HomePage />} />
 
-            <Route path='/sample-page' render={props => (<h1>Sample Page</h1>)} />
+          <Route path="/sample-page" render={props => <h1>Sample Page</h1>} />
         </div>
       </BrowserRouter>
     );

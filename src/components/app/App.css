@@ -26,3 +26,48 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.full_screen {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: 15px;
+  border: 1px solid black;
+}
+
+.center_middle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media screen and (min-width: 768px) {
+  .lg_half {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .sm_full {
+    width: 100%;
+  }
+}
+
+.flat_menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.flat_menu li {
+  display: inline-block;
+  padding: 0 10px;
+  border-right: 1px solid black;
+}
+
+.flat_menu li:last-child {
+  border-right: none;
+}
