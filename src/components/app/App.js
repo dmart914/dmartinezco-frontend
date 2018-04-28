@@ -5,6 +5,7 @@ import './App.css';
 import Menu from '../organisms/menu/menu';
 import Header from '../organisms/header/header';
 import Loading from '../atoms/loading/loading';
+import Single from '../pages/single/single';
 
 import HomePage from '../pages/home/home';
 
@@ -33,10 +34,17 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           {/** <Header /> **/}
-          {/** <Menu data={primaryMenu} /> **/ }
-          <Route exact path="/" render={props => <HomePage />} />
 
-          <Route path="/sample-page" render={props => <h1>Sample Page</h1>} />
+          {/**<Route exact path="/" render={props => <HomePage />} />**/}
+
+          <Menu data={primaryMenu} />
+
+          <Route
+            path="/:objectType(page|post)/:objectId"
+            render={props => (
+              <Single {...props} />
+            )}
+          />
         </div>
       </BrowserRouter>
     );

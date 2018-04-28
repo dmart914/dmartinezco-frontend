@@ -31,19 +31,7 @@ export default class WP {
         .menu()
         .location()
         .id('dmco_primary_menu')
-        .then(data => {
-          console.log(data);
-          if (data.items && data.items.length > 0) {
-            for (let i = 0; i < data.items.length; i++) {
-              data.items[i].url = data.items[i].url.replace(
-                process.env.REACT_APP_WP_HOST,
-                ''
-              );
-            }
-          }
-
-          this.data.primaryMenu = data;
-        })
+        .then(data => (this.data.primaryMenu = data))
         .then(() => resolve());
     });
   };
