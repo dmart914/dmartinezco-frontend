@@ -35,4 +35,17 @@ export default class WP {
         .then(() => resolve());
     });
   };
+
+  _fetchSingle = (id, type) => {
+    switch (type) {
+      case 'page':
+        return this.site.pages().id(id);
+
+      default:
+        return null;
+    }
+
+  }
+
+  _
 }

@@ -9,25 +9,30 @@ import Single from '../pages/single/single';
 
 import HomePage from '../pages/home/home';
 
-import WP from '../../lib/wp';
-const wp = new WP(process.env.REACT_APP_WP_HOST, {
-  primaryMenuId: process.env.REACT_APP_WP_PRIMARY_MENU_ID
-});
 
 class App extends Component {
+  static defaultProps = {
+    wp: null,
+  };
+
   constructor(props) {
     super(props);
 
     this.state = {
-      loaded: false
+      loaded: false,
     };
 
-    wp.init().then(() => this.setState({ loaded: true }));
+    this.props.wp
+      .init()
+      .then(() => this.setState({ loaded: true }));
   }
 
   render() {
-    if (!this.state.loaded) return <Loading />;
+    if (!this.state.loaded || !this.props.wp) {
+      return <Loading />;
+    }
 
+    const { wp } = this.props;
     const { primaryMenu } = wp.data;
 
     return (
@@ -42,7 +47,7 @@ class App extends Component {
           <Route
             path="/:objectType(page|post)/:objectId"
             render={props => (
-              <Single {...props} />
+              <Single {...props} wp={wp}/>
             )}
           />
         </div>
