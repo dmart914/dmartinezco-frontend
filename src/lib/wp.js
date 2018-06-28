@@ -1,4 +1,5 @@
 import WPAPI from 'wpapi';
+import axios from 'axios';
 
 export default class WP {
   constructor(url, settings) {
@@ -11,7 +12,8 @@ export default class WP {
     };
 
     this.data = {
-      primaryMenu: null
+      primaryMenu: null,
+      siteMeta: null,
     };
   }
 
@@ -20,6 +22,7 @@ export default class WP {
       WPAPI.discover(this.url)
         .then(site => (this.site = site))
         .then(() => this._fetchPrimaryMenu(this.settings.primaryMenuId))
+        .then(() => this._fetchSiteMeta())
         .then(() => resolve());
     });
   }
@@ -36,13 +39,23 @@ export default class WP {
     });
   };
 
+  _fetchSiteMeta = () => {
+    return axios.get(`${this.url}/wp-json`)
+      .then(resp => {
+        const { data } = resp;
+        if (!data) { throw new Error('Site meta not found'); }
+        this.data.siteMeta = data;
+      });
+  }
+
   _fetchSingle = (id, type) => {
     switch (type) {
+      case 'post':
       case 'page':
         return this.site.pages().id(id);
 
       default:
-        return null;
+        return new Promise(() => { throw new Error('Type not found') });
     }
 
   }

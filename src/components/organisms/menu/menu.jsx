@@ -3,14 +3,6 @@ import { Link } from 'react-router-dom';
 import wpMenuItemToUrl from '../../../util/wpMenuItemToUrl';
 
 export default class Menu extends Component {
-  render() {
-    return (
-      <nav>
-        <ul>{this._navLinks}</ul>
-      </nav>
-    );
-  }
-
   get _navLinks() {
     const { items } = this.props.data;
     return items.map(this._navLink);
@@ -18,9 +10,27 @@ export default class Menu extends Component {
 
   _navLink = (item) => (
     <li key={item.ID}>
-      <Link to={wpMenuItemToUrl(item)}>
-        {item.title}
-      </Link>
+      {
+        item.object === 'custom'
+        ? (
+          <a href={item.url} target="_blank">
+            {item.title}
+          </a>
+        )
+        : (
+          <Link to={wpMenuItemToUrl(item)}>
+            {item.title}
+          </Link>
+        )
+      }
     </li>
   );
+
+  render() {
+    return (
+      <nav>
+        <ul>{this._navLinks}</ul>
+      </nav>
+    );
+  }
 }

@@ -33,12 +33,14 @@ class App extends Component {
     }
 
     const { wp } = this.props;
-    const { primaryMenu } = wp.data;
+    const { primaryMenu, siteMeta } = wp.data;
 
     return (
       <BrowserRouter>
         <div className="App">
-          {/** <Header /> **/}
+          <Header
+            title={siteMeta.name}
+            description={siteMeta.description} />
 
           {/**<Route exact path="/" render={props => <HomePage />} />**/}
 

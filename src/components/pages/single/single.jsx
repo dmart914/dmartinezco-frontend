@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Loading from '../../atoms/loading/loading';
 
-export default class Menu extends Component {
+export default class Single extends Component {
   constructor(props) {
     super(props);
 
@@ -11,17 +11,37 @@ export default class Menu extends Component {
       pageFetchError: null,
     }
 
-    this._fetchPageData();
+    const { match: { params: { objectId, objectType } } } = this.props;
+    this._fetchPageData(objectId, objectType);
   }
 
-  _fetchPageData = () => {
-    const {
-      match: { params: { objectId, objectType, } },
-      wp,
-    } = this.props;
+  componentDidUpdate(prevProps) {
+    const { match: { params: {
+      objectId,
+      objectType,
+    } } } = this.props;
+
+    const { match: { params: {
+      objectId: prevObjectId,
+      objectType: prevObjectType
+    } } } = prevProps;
+
+    if (prevObjectId !== objectId || prevObjectType !== objectType) {
+      this.setState({ pageData: null, pageFetchError: null, });
+      this._fetchPageData(objectId, objectType);
+    }
+  }
+
+  _fetchPageData = (objectId, objectType) => {
+    const { wp } = this.props;
 
     wp._fetchSingle(objectId, objectType)
-      .then(data => { this.setState({ pageData: data }) })
+      .then(data => {
+        this.setState({
+          pageData: data,
+          pageFetchError: null
+        })
+      })
       .catch(err => { this.setState({ pageFetchError: err }) });
   }
 
@@ -32,18 +52,18 @@ export default class Menu extends Component {
 
     const { pageData, pageFetchError, } = this.state;
 
-    if (pageData === null) {
-      return <Loading />
-    }
-
     if (pageFetchError !== null) {
       return pageFetchError.message;
+    }
+
+    if (pageData === null) {
+      return <Loading />
     }
 
     return (
       <div id={`${objectType}_${objectId}`} className={`${objectType}`}>
         <div className='title'>
-          <h2 dangerouslySetInnerHTML={{
+          <h3 dangerouslySetInnerHTML={{
             __html: pageData.title.rendered,
           }} />
         </div>

@@ -4,13 +4,12 @@
  * @returns string
 **/
 
-export default function wpMenuItemToUrl(
-  {
+export default function wpMenuItemToUrl(menuItem) {
+  const {
     object,
     object_id,
     url
-  }
-) {
+  } = menuItem;
   switch (object) {
     case 'page':
       return `/page/${object_id}`;
