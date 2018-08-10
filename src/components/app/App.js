@@ -40,11 +40,17 @@ class App extends Component {
         <div className="App">
           <Header
             title={siteMeta.name}
-            description={siteMeta.description} />
+            description={siteMeta.description}
+          />
 
           {/**<Route exact path="/" render={props => <HomePage />} />**/}
 
           <Menu data={primaryMenu} />
+
+          <Route
+            path="/:objectType(page|post)"
+            render={props => (<p>Cat</p>)}
+          />
 
           <Route
             path="/:objectType(page|post)/:objectId"
