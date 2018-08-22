@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Loading from '../../atoms/loading/loading';
+import './single.css';
 
 export default class Single extends Component {
   constructor(props) {
@@ -65,7 +66,7 @@ export default class Single extends Component {
     return (
       <div id={`${objectType}_${objectId}`} className={`${objectType}`}>
         <div className='title'>
-          <h3 dangerouslySetInnerHTML={{
+          <h2 dangerouslySetInnerHTML={{
             __html: pageData.title.rendered,
           }} />
         </div>
