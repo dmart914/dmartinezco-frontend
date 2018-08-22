@@ -7,12 +7,14 @@ export default class Single extends Component {
     super(props);
 
     this.state = {
-      pageData: null,
+      pageData: props.pageData || null,
       pageFetchError: null,
     }
 
-    const { match: { params: { objectId, objectType } } } = this.props;
-    this._fetchPageData(objectId, objectType);
+    if (!this.state.pageData) {
+      const { match: { params: { objectId, objectType } } } = this.props;
+      this._fetchPageData(objectId, objectType);
+    }
   }
 
   componentDidUpdate(prevProps) {

@@ -6,9 +6,7 @@ import Menu from '../organisms/menu/menu';
 import Header from '../organisms/header/header';
 import Loading from '../atoms/loading/loading';
 import Single from '../pages/single/single';
-
-import HomePage from '../pages/home/home';
-
+import Loop from '../pages/loop/loop';
 
 class App extends Component {
   static defaultProps = {
@@ -33,7 +31,7 @@ class App extends Component {
     }
 
     const { wp } = this.props;
-    const { primaryMenu, siteMeta } = wp.data;
+    const { frontPage, primaryMenu, siteMeta } = wp.data;
 
     return (
       <BrowserRouter>
@@ -43,19 +41,31 @@ class App extends Component {
             description={siteMeta.description}
           />
 
-          {/**<Route exact path="/" render={props => <HomePage />} />**/}
-
           <Menu data={primaryMenu} />
 
           <Route
-            path="/:objectType(page|post)"
-            render={props => (<p>Cat</p>)}
+            exact
+            path="/"
+            render={props => (
+              <Single {...props}
+                pageData={frontPage}
+                wp={wp} />
+            )}
           />
 
           <Route
-            path="/:objectType(page|post)/:objectId"
+            exact
+            path="/:objectType(posts|pages)/:objectId"
             render={props => (
-              <Single {...props} wp={wp}/>
+              <Single {...props} wp={wp} />
+            )}
+          />
+
+          <Route
+            exact
+            path="/:objectType(posts|pages)"
+            render={props => (
+              <Loop {...props} wp={wp} />
             )}
           />
         </div>

@@ -12,10 +12,10 @@ export default function wpMenuItemToUrl(menuItem) {
   } = menuItem;
   switch (object) {
     case 'page':
-      return `/page/${object_id}`;
+      return `/pages/${object_id}`;
 
     case 'post':
-      return `/post/${object_id}`;
+      return `/posts/${object_id}`;
 
     case 'custom':
       return url;

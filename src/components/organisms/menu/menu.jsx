@@ -13,9 +13,9 @@ export default class Menu extends Component {
       {
         item.object === 'custom'
         ? (
-          <a href={item.url} target="_blank">
+          <Link to={item.url}>
             {item.title}
-          </a>
+          </Link>
         )
         : (
           <Link to={wpMenuItemToUrl(item)}>

@@ -6,7 +6,7 @@ A React-based Wordpress client that serves as the personal site for Dave Martine
 
 Note that this TODO list applies both to this repository and the repository for the Wordpress plugin used with this site.
 
-- [ ] Home page settings display
+- [x] Home page display
 - [ ] Loop page (category, tag, posts) and settings
 - [ ] Pagination (in page and in loop)
 - [ ] Comments
@@ -19,8 +19,10 @@ Note that this TODO list applies both to this repository and the repository for 
 - [ ] Stretch: custom stylesheet
 - [ ] Stretch: search
 - [ ] Stretch: SEO and SEO Settings
+- [ ] Add custom lint/lintfix npm
+- [ ] Home page settings display
 
-## License 
+## License
 
 MIT License
 

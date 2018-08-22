@@ -12,6 +12,7 @@ export default class WP {
     };
 
     this.data = {
+      frontPage: null,
       primaryMenu: null,
       siteMeta: null,
     };
@@ -21,10 +22,38 @@ export default class WP {
     return new Promise((resolve, reject) => {
       WPAPI.discover(this.url)
         .then(site => (this.site = site))
-        .then(() => this._fetchPrimaryMenu(this.settings.primaryMenuId))
-        .then(() => this._fetchSiteMeta())
+        .then(() => Promise.all([
+          this._fetchPrimaryMenu(this.settings.primaryMenuId),
+          this._fetchFrontPage(),
+          this._fetchSiteMeta(),
+        ]))
         .then(() => resolve());
     });
+  }
+
+  _fetchFrontPage = () => {
+    return new Promise((resolve, reject) => {
+      this.site
+        .namespace('dmco')
+        .front_page_id()
+        .then(pageId => {
+          if (pageId === null) { return resolve(); }
+          return this._fetchSingle(pageId, 'pages')
+        })
+        .then(data => { this.data.frontPage = data; })
+        .then(() => resolve());
+    })
+  }
+
+  _fetchPaginatedContent = (contentType, page=1, perPage=10, params=[]) => {
+    return new Promise((resolve, reject) => {
+      let content = this._getCollectionHandler(contentType);
+      if (!content) { return reject(`No content type for ${contentType}`); }
+      content.perPage(perPage);
+      content.page(page);
+      params.forEach(p => { content.param(p[0], p[1]); });
+      return resolve(content);
+    })
   }
 
   _fetchPrimaryMenu = menuId => {
@@ -50,8 +79,8 @@ export default class WP {
 
   _fetchSingle = (id, type) => {
     switch (type) {
-      case 'post':
-      case 'page':
+      case 'posts':
+      case 'pages':
         return this.site.pages().id(id);
 
       default:
@@ -60,5 +89,14 @@ export default class WP {
 
   }
 
-  _
+  _getCollectionHandler = (type) => {
+    switch (type) {
+      case 'posts':
+        return this.site.posts();
+      case 'pages':
+        return this.site.pages();
+      default:
+        return null;
+    }
+  }
 }

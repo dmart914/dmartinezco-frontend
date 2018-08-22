@@ -1,20 +1,11 @@
 import React, { Component } from 'react'
+import wp from '../../../lib/wp';
 
 export default class HomePage extends Component {
   render() {
+    const { post_content } = this.props.frontPage;
     return (
-      <div id='home'>
-        <div className='full_screen'>
-          <div className='center_middle lg_half sm_full'>
-            <h1>dmartinez.co</h1>
-            <p>A personal site for Dave Martinez</p>
-            <ul className='flat_menu'>
-              <li><a>Resume</a></li>
-              <li><a>About</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      <div dangerouslySetInnerHTML={{ __html: post_content }} />
     );
   }
 }
