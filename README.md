@@ -2,6 +2,12 @@
 
 A React-based Wordpress client that serves as the personal site for Dave Martinez. Feel free to use this site as an example for your own Wordpress site!
 
+## Setup
+Be sure have the following inside /.env
+```
+REACT_APP_WP_HOST=[the host, without wp-json]
+```
+
 ## TODO
 
 Note that this TODO list applies both to this repository and the repository for the Wordpress plugin used with this site.
