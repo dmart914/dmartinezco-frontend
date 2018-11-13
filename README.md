@@ -27,6 +27,7 @@ Note that this TODO list applies both to this repository and the repository for 
 - [ ] Stretch: SEO and SEO Settings
 - [ ] Add custom lint/lintfix npm
 - [ ] Home page settings display
+- [ ] Bug: Home page won't load if primary menu not set
 
 ## License
 
