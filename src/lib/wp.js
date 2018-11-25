@@ -35,10 +35,10 @@ export default class WP {
     return new Promise((resolve, reject) => {
       this.site
         .namespace('dmco')
-        .front_page_id()
-        .then(pageId => {
-          if (pageId === null) { return resolve(); }
-          return this._fetchSingle(pageId, 'pages')
+        .front_page()
+        .then(page => {
+          if (page === null) { return resolve(); }
+          return this._fetchSingle(page.ID, 'pages')
         })
         .then(data => { this.data.frontPage = data; })
         .then(() => resolve());
