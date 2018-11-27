@@ -45,7 +45,12 @@ export default class WP {
     })
   }
 
-  _fetchPaginatedContent = (contentType, page=1, perPage=10, params=[]) => {
+  _fetchPaginatedContent = (
+    contentType,
+    page=1,
+    perPage=10,
+    params=[]
+  ) => {
     return new Promise((resolve, reject) => {
       let content = this._getCollectionHandler(contentType);
       if (!content) { return reject(`No content type for ${contentType}`); }
@@ -80,6 +85,7 @@ export default class WP {
   _fetchSingle = (id, type) => {
     switch (type) {
       case 'posts':
+      return this.site.posts().id(id);
       case 'pages':
         return this.site.pages().id(id);
 
@@ -95,6 +101,10 @@ export default class WP {
         return this.site.posts();
       case 'pages':
         return this.site.pages();
+      case 'categories':
+        return this.site.categories();
+      case 'tags':
+        return this.site.tags();
       default:
         return null;
     }

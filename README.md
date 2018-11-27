@@ -28,6 +28,9 @@ Note that this TODO list applies both to this repository and the repository for 
 - [ ] Add custom lint/lintfix npm
 - [ ] Home page settings display
 - [ ] Bug: Home page won't load if primary menu not set
+- [ ] Refactor constants: 'page', 'pages', 'category', etc.
+- [ ] wp: set category to display on home page
+  - [ ] wp: page display for front page
 
 ## License
 

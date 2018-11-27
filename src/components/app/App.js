@@ -47,9 +47,13 @@ class App extends Component {
             exact
             path="/"
             render={props => (
-              <Single {...props}
-                pageData={frontPage}
-                wp={wp} />
+              <React.Fragment>
+                <Single {...props}
+                  pageData={frontPage}
+                  wp={wp}
+                />
+                <Loop match={{ params: { objectType: 'posts', tag: 'home', page: 1 }}} wp={wp} />
+              </React.Fragment>
             )}
           />
 
@@ -63,7 +67,7 @@ class App extends Component {
 
           <Route
             exact
-            path="/:objectType(posts|pages)"
+            path="/:objectType(categories|posts|pages|tags)/:slug?"
             render={props => (
               <Loop {...props} wp={wp} />
             )}

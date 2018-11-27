@@ -1,3 +1,4 @@
+import queryString from 'query-string';
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 
@@ -8,6 +9,7 @@ export default class Loop extends Component {
     super(props);
 
     this.state = {
+      error: null,
       loopData: null,
       loading: true,
     };
@@ -16,19 +18,33 @@ export default class Loop extends Component {
   }
 
   _fetchLoopData = () => {
-    const { match, wp } = this.props;
+    const { location, match, wp } = this.props;
     if (!match || !match.params || !match.params.objectType) {
       return;
     }
 
-    const { objectType, page } = match.params;
-    wp._fetchPaginatedContent(objectType, page, 10, [])
+    const { objectType, page, ...otherParams } = match.params;
+    // @TODO: Refactor
+    const search = location && location.search
+      ? queryString.parse(location.search)
+      : null;
+
+    // @TODO: Refactor
+    const allParams = {...otherParams, ...(search || {})};
+    const PARAMS = ['slug', 'tag'];
+    const safeParams = Object.keys(allParams)
+      .filter(p => PARAMS.includes(p))
+      .map(p => [p, allParams[p]]);
+
+    // @TODO: Refactor undefined to perPage from safeParams (default to 10)
+    wp._fetchPaginatedContent(objectType, page, undefined, safeParams)
       .then(data => {
         this.setState({
           loopData: data,
           loading: false,
         });
-      });
+      })
+      .catch(error => this.setState({ error }));
   }
 
   _generateLoopMarkup = (loopData=[]) => {
@@ -49,8 +65,9 @@ export default class Loop extends Component {
   }
 
   render() {
-    const { loopData } = this.state;
+    const { error, loopData } = this.state;
     if (!loopData) { return (<p>No content.</p>); }
+    if (error) { return <pre>{JSON.stringify(error, null, '  ')}</pre> }
 
     return (
       <div className="content">
